@@ -1,0 +1,993 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>underThought - A Philosophical Journal by Faith Ohio</title>
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Anybody:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0c0c0c;
+    --surface: #141414;
+    --surface2: #1c1c1c;
+    --border: rgba(255,255,255,0.06);
+    --gold: #c9a96e;
+    --gold-dim: rgba(201,169,110,0.15);
+    --gold-border: rgba(201,169,110,0.3);
+    --white: #f2ede6;
+    --muted: #6b6560;
+    --accent: #8b7355;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--bg);
+    color: var(--white);
+    font-family: 'Anybody', sans-serif;
+    font-weight: 300;
+    line-height: 1.6;
+    min-height: 100vh;
+  }
+
+  .container { max-width: 1200px; margin: 0 auto; padding: 0 48px; }
+
+  /* NAVBAR */
+  .navbar {
+    position: sticky;
+    top: 0;
+    background: var(--bg);
+    border-bottom: 1px solid var(--border);
+    z-index: 1000;
+    backdrop-filter: blur(10px);
+  }
+
+  .navbar-content {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 24px 48px;
+    display: flex;
+    justify-content: flex-end;
+    gap: 40px;
+    align-items: center;
+  }
+
+  .nav-link {
+    font-size: 11px;
+    letter-spacing: 2.5px;
+    text-transform: uppercase;
+    color: var(--muted);
+    text-decoration: none;
+    transition: color 0.3s ease;
+    cursor: pointer;
+    font-weight: 400;
+  }
+
+  .nav-link:hover {
+    color: var(--gold);
+  }
+
+  .nav-link.active {
+    color: var(--gold);
+  }
+
+  /* HEADER */
+  .header {
+    padding: 80px 0 40px;
+    border-bottom: 1px solid var(--border);
+    margin-bottom: 60px;
+  }
+
+  .header h1 {
+    font-family: 'Anton', sans-serif;
+    font-size: 64px;
+    font-weight: 400;
+    font-style: italic;
+    line-height: 1.1;
+    margin-bottom: 20px;
+    letter-spacing: 1px;
+  }
+
+  .logo-under {
+    background: linear-gradient(135deg, var(--gold) 0%, #000000 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .logo-thought {
+    color: var(--white);
+  }
+
+  .header-sub {
+    font-size: 15px;
+    color: var(--muted);
+    letter-spacing: 0.5px;
+    line-height: 1.7;
+    max-width: 700px;
+  }
+
+  /* SECTION HEADERS */
+  .section-header {
+    margin-bottom: 36px;
+  }
+
+  .section-label {
+    font-size: 9px;
+    letter-spacing: 3.5px;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 12px;
+    font-weight: 400;
+  }
+
+  .section-title {
+    font-family: 'Anton', sans-serif;
+    font-size: 36px;
+    font-weight: 400;
+    font-style: italic;
+    letter-spacing: 0.5px;
+    color: var(--white);
+  }
+
+  .section {
+    margin-bottom: 88px;
+    padding: 0 0 88px;
+  }
+
+  .main-content {
+    padding: 60px 0;
+  }
+
+  /* CONTROLS */
+  .controls {
+    margin-bottom: 48px;
+    display: flex;
+    gap: 20px;
+    flex-wrap: wrap;
+    align-items: center;
+  }
+
+  .search-wrapper {
+    flex: 1;
+    min-width: 280px;
+  }
+
+  .search-bar input {
+    width: 100%;
+    padding: 14px 18px;
+    font-size: 14px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    color: var(--white);
+    font-family: 'Anybody', sans-serif;
+    font-weight: 300;
+    transition: all 0.3s ease;
+  }
+
+  .search-bar input::placeholder {
+    color: var(--muted);
+  }
+
+  .search-bar input:focus {
+    outline: none;
+    border-color: var(--gold-border);
+    background: var(--surface2);
+  }
+
+  .filters {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+  }
+
+  .filter-tag {
+    padding: 8px 16px;
+    background: transparent;
+    border: 1px solid var(--border);
+    color: var(--muted);
+    font-size: 11px;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-weight: 400;
+  }
+
+  .filter-tag:hover {
+    border-color: var(--gold-border);
+    color: var(--gold);
+  }
+
+  .filter-tag.active {
+    background: var(--gold-dim);
+    border-color: var(--gold-border);
+    color: var(--gold);
+  }
+
+  /* SERIES GRID */
+  .series-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 2px;
+    margin-bottom: 60px;
+    background: var(--border);
+  }
+
+  .series-card {
+    background: var(--surface);
+    padding: 48px 40px;
+    cursor: pointer;
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    border: 1px solid transparent;
+    min-height: 320px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+
+  .series-card:hover {
+    background: var(--surface2);
+    border-color: var(--gold-border);
+    transform: translateY(-4px);
+  }
+
+  .series-card:hover .series-title {
+    color: var(--gold);
+  }
+
+  .series-meta {
+    font-size: 10px;
+    letter-spacing: 2.5px;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 24px;
+    font-weight: 400;
+  }
+
+  .series-title {
+    font-family: 'Anton', sans-serif;
+    font-size: 42px;
+    font-weight: 400;
+    font-style: italic;
+    line-height: 1.1;
+    margin-bottom: 20px;
+    color: var(--white);
+    transition: color 0.3s ease;
+    letter-spacing: 0.5px;
+  }
+
+  .series-description {
+    font-size: 14px;
+    line-height: 1.8;
+    color: var(--muted);
+    margin-bottom: 32px;
+  }
+
+  .series-count {
+    font-size: 11px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--muted);
+    padding-top: 20px;
+    border-top: 1px solid var(--border);
+  }
+
+  .series-count span {
+    color: var(--gold);
+    font-weight: 400;
+  }
+
+  /* POSTS GRID */
+  .posts-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 2px;
+    margin-bottom: 60px;
+    background: var(--border);
+  }
+
+  .post-card {
+    background: var(--surface);
+    padding: 40px 36px;
+    cursor: pointer;
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    border: 1px solid transparent;
+  }
+
+  .post-card:hover {
+    background: var(--surface2);
+    border-color: var(--gold-border);
+    transform: translateY(-2px);
+  }
+
+  .post-card:hover .post-title {
+    color: var(--gold);
+  }
+
+  .post-meta {
+    font-size: 10px;
+    letter-spacing: 2.5px;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 20px;
+    font-weight: 400;
+  }
+
+  .post-title {
+    font-family: 'Anton', sans-serif;
+    font-size: 28px;
+    font-weight: 400;
+    font-style: italic;
+    line-height: 1.3;
+    margin-bottom: 16px;
+    color: var(--white);
+    transition: color 0.3s ease;
+    letter-spacing: 0.5px;
+  }
+
+  .post-excerpt {
+    font-size: 14px;
+    line-height: 1.8;
+    color: var(--muted);
+    margin-bottom: 24px;
+  }
+
+  .post-tags {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+  }
+
+  .tag {
+    font-size: 9px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    padding: 6px 12px;
+    border: 1px solid var(--border);
+    color: var(--gold);
+    font-weight: 400;
+  }
+
+  .read-more {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 11px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-top: 16px;
+    font-weight: 400;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+  }
+
+  .post-card:hover .read-more,
+  .series-card:hover .read-more {
+    opacity: 1;
+  }
+
+  .read-more::after {
+    content: '→';
+    transition: transform 0.3s ease;
+  }
+
+  .post-card:hover .read-more::after,
+  .series-card:hover .read-more::after {
+    transform: translateX(4px);
+  }
+
+  /* ARTICLE VIEW */
+  .article-view {
+    display: none;
+    animation: fadeIn 0.5s ease;
+  }
+
+  .article-view.active {
+    display: block;
+  }
+
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .back-button {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 40px;
+    color: var(--muted);
+    text-decoration: none;
+    font-size: 11px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: color 0.3s ease;
+    font-weight: 400;
+  }
+
+  .back-button:hover {
+    color: var(--gold);
+  }
+
+  .back-button::before {
+    content: '←';
+    font-size: 14px;
+  }
+
+  .article-header {
+    border-bottom: 1px solid var(--border);
+    padding-bottom: 40px;
+    margin-bottom: 48px;
+  }
+
+  .article-meta {
+    font-size: 10px;
+    letter-spacing: 2.5px;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 24px;
+    font-weight: 400;
+  }
+
+  .article-series-badge {
+    display: inline-block;
+    font-size: 9px;
+    letter-spacing: 2.5px;
+    text-transform: uppercase;
+    color: var(--gold);
+    background: var(--gold-dim);
+    border: 1px solid var(--gold-border);
+    padding: 6px 14px;
+    margin-bottom: 24px;
+  }
+
+  .article-title {
+    font-family: 'Anton', sans-serif;
+    font-size: 64px;
+    font-weight: 400;
+    font-style: italic;
+    line-height: 1.1;
+    color: var(--white);
+    margin-bottom: 24px;
+    max-width: 900px;
+    letter-spacing: 0.5px;
+  }
+
+  .article-tags {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+  }
+
+  .article-content {
+    max-width: 740px;
+    font-size: 16px;
+    line-height: 1.9;
+    color: var(--white);
+  }
+
+  .article-content p {
+    margin-bottom: 1.8em;
+  }
+
+  .article-content h2 {
+    font-family: 'Anton', sans-serif;
+    font-size: 36px;
+    font-weight: 400;
+    font-style: italic;
+    margin-top: 2.5em;
+    margin-bottom: 1em;
+    color: var(--white);
+    letter-spacing: 0.5px;
+  }
+
+  .article-content h3 {
+    font-family: 'Anton', sans-serif;
+    font-size: 28px;
+    font-weight: 400;
+    font-style: italic;
+    margin-top: 2em;
+    margin-bottom: 0.8em;
+    color: var(--gold);
+    letter-spacing: 0.5px;
+  }
+
+  .article-content em {
+    font-style: italic;
+    color: var(--gold);
+  }
+
+  .article-content strong {
+    font-weight: 500;
+  }
+
+  .article-content blockquote {
+    border-left: 2px solid var(--gold-border);
+    padding-left: 32px;
+    margin: 2.5em 0;
+    font-family: 'Anton', sans-serif;
+    font-size: 24px;
+    font-style: italic;
+    color: var(--muted);
+    letter-spacing: 0.5px;
+  }
+
+  /* SERIES VIEW */
+  .series-view {
+    display: none;
+    animation: fadeIn 0.5s ease;
+  }
+
+  .series-view.active {
+    display: block;
+  }
+
+  .series-view-header {
+    border-bottom: 1px solid var(--border);
+    padding-bottom: 40px;
+    margin-bottom: 48px;
+  }
+
+  .series-view-title {
+    font-family: 'Anton', sans-serif;
+    font-size: 56px;
+    font-weight: 400;
+    font-style: italic;
+    line-height: 1.1;
+    color: var(--white);
+    margin-bottom: 20px;
+    letter-spacing: 0.5px;
+  }
+
+  .series-view-description {
+    font-size: 16px;
+    line-height: 1.8;
+    color: var(--muted);
+    max-width: 740px;
+  }
+
+  /* FOOTER */
+  .footer {
+    border-top: 1px solid var(--border);
+    padding: 60px 0 80px;
+    margin-top: 120px;
+  }
+
+  .footer-content {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 48px;
+  }
+
+  .footer-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 80px;
+    margin-bottom: 60px;
+  }
+
+  .footer-section h3 {
+    font-family: 'Anton', sans-serif;
+    font-size: 24px;
+    font-weight: 400;
+    font-style: italic;
+    margin-bottom: 24px;
+    color: var(--gold);
+    letter-spacing: 0.5px;
+  }
+
+  .footer-section p {
+    font-size: 14px;
+    color: var(--muted);
+    line-height: 1.8;
+    margin-bottom: 20px;
+  }
+
+  .substack-embed {
+    margin-top: 24px;
+  }
+
+  .substack-embed iframe {
+    width: 100%;
+    max-width: 480px;
+    height: 320px;
+    border: 1px solid var(--border);
+    background: var(--surface);
+  }
+
+  .social-links {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  .social-link {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    color: var(--muted);
+    text-decoration: none;
+    font-size: 14px;
+    transition: color 0.3s ease;
+    padding: 8px 0;
+  }
+
+  .social-link:hover {
+    color: var(--gold);
+  }
+
+  .social-link::before {
+    content: '→';
+    color: var(--gold);
+    font-size: 16px;
+  }
+
+  .footer-bottom {
+    padding-top: 40px;
+    border-top: 1px solid var(--border);
+    text-align: center;
+  }
+
+  .footer-credit {
+    font-size: 11px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+
+  .footer-credit a {
+    color: var(--gold);
+    text-decoration: none;
+  }
+
+  .footer-credit a:hover {
+    text-decoration: underline;
+  }
+
+  /* SUBSCRIBE MODAL */
+  .modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.9);
+    z-index: 2000;
+    align-items: center;
+    justify-content: center;
+    backdrop-filter: blur(10px);
+  }
+
+  .modal.active {
+    display: flex;
+  }
+
+  .modal-content {
+    background: var(--surface);
+    border: 1px solid var(--gold-border);
+    padding: 48px;
+    max-width: 600px;
+    width: 90%;
+    position: relative;
+  }
+
+  .modal-close {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    font-size: 24px;
+    color: var(--muted);
+    cursor: pointer;
+    transition: color 0.3s ease;
+    background: none;
+    border: none;
+    padding: 0;
+    width: 32px;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .modal-close:hover {
+    color: var(--gold);
+  }
+
+  .modal h2 {
+    font-family: 'Anton', sans-serif;
+    font-size: 36px;
+    font-weight: 400;
+    font-style: italic;
+    margin-bottom: 16px;
+    color: var(--white);
+    letter-spacing: 0.5px;
+  }
+
+  .modal p {
+    font-size: 14px;
+    color: var(--muted);
+    line-height: 1.8;
+    margin-bottom: 24px;
+  }
+
+  /* LOADING & EMPTY STATES */
+  .loading {
+    text-align: center;
+    padding: 100px 20px;
+    color: var(--muted);
+    font-size: 12px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+  }
+
+  .no-results {
+    text-align: center;
+    padding: 100px 20px;
+    color: var(--muted);
+  }
+
+  .no-results-title {
+    font-family: 'Anton', sans-serif;
+    font-size: 36px;
+    font-style: italic;
+    margin-bottom: 12px;
+    color: var(--white);
+    letter-spacing: 0.5px;
+  }
+
+  .no-results-text {
+    font-size: 14px;
+  }
+
+  .posts-list.hidden,
+  .no-series {
+    display: none;
+  }
+
+  /* RESPONSIVE */
+  @media (max-width: 900px) {
+    .posts-grid,
+    .series-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .footer-grid {
+      grid-template-columns: 1fr;
+      gap: 40px;
+    }
+  }
+
+  @media (max-width: 600px) {
+    .container,
+    .navbar-content,
+    .footer-content {
+      padding-left: 24px;
+      padding-right: 24px;
+    }
+
+    .header {
+      padding-top: 60px;
+    }
+
+    .header h1 {
+      font-size: 42px;
+    }
+
+    .navbar-content {
+      gap: 24px;
+      padding: 20px 24px;
+    }
+
+    .section-title {
+      font-size: 28px;
+    }
+
+    .series-title {
+      font-size: 32px;
+    }
+
+    .post-title {
+      font-size: 22px;
+    }
+
+    .article-title {
+      font-size: 38px;
+    }
+
+    .series-view-title {
+      font-size: 38px;
+    }
+
+    .controls {
+      flex-direction: column;
+      align-items: stretch;
+    }
+
+    .search-wrapper {
+      width: 100%;
+    }
+
+    .filters {
+      width: 100%;
+    }
+
+    .modal-content {
+      padding: 32px 24px;
+    }
+  }
+
+  /* CONFIG NOTICE */
+  .config-notice {
+    background: var(--gold-dim);
+    border: 1px solid var(--gold-border);
+    padding: 24px 28px;
+    margin-bottom: 40px;
+  }
+
+  .config-notice-title {
+    font-size: 11px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 12px;
+    font-weight: 500;
+  }
+
+  .config-notice-text {
+    font-size: 13px;
+    color: var(--white);
+    line-height: 1.7;
+  }
+
+  .config-notice code {
+    background: rgba(0,0,0,0.3);
+    padding: 2px 8px;
+    font-size: 12px;
+    color: var(--gold);
+    font-family: monospace;
+  }
+</style>
+</head>
+<body>
+
+<!-- Navbar -->
+<nav class="navbar">
+  <div class="navbar-content">
+    <a class="nav-link" id="navSeries" onclick="showSeriesOnly()">Series</a>
+    <a class="nav-link" href="about.html">About</a>
+    <a class="nav-link" onclick="openSubscribeModal()">Subscribe</a>
+  </div>
+</nav>
+
+<div class="container">
+  
+  <!-- Config Notice -->
+  <div class="config-notice" id="configNotice">
+    <div class="config-notice-title">Configuration Required</div>
+    <div class="config-notice-text">
+      Update <code>SHEET_ID</code> with your Google Sheet ID.
+    </div>
+  </div>
+
+  <!-- Header -->
+  <div class="header">
+    <h1>
+      <span class="logo-under">under</span><span class="logo-thought">Thought</span>
+    </h1>
+    <div class="header-sub">A philosophical journal by Faith Ohio dedicated to cognitive rebellion</div>
+  </div>
+
+  <!-- Article View -->
+  <div class="article-view" id="articleView">
+    <a class="back-button" onclick="backToMain()">Back</a>
+    <div class="article-header">
+      <div class="article-series-badge" id="articleSeriesBadge"></div>
+      <div class="article-meta" id="articleMeta"></div>
+      <h1 class="article-title" id="articleTitle"></h1>
+      <div class="article-tags" id="articleTags"></div>
+    </div>
+    <div class="article-content" id="articleContent"></div>
+  </div>
+
+  <!-- Series View -->
+  <div class="series-view" id="seriesView">
+    <a class="back-button" onclick="backToMain()">Back to All Writing</a>
+    <div class="series-view-header">
+      <div class="section-label">Essay Series</div>
+      <h1 class="series-view-title" id="seriesViewTitle"></h1>
+      <div class="series-view-description" id="seriesViewDescription"></div>
+    </div>
+    <div class="posts-grid" id="seriesPostsGrid"></div>
+  </div>
+
+  <!-- Main Posts List -->
+  <div class="posts-list main-content" id="postsList">
+    
+    <!-- Controls -->
+    <div class="controls">
+      <div class="search-wrapper">
+        <div class="search-bar">
+          <input type="text" id="searchInput" placeholder="Search essays...">
+        </div>
+      </div>
+      <div class="filters" id="filters"></div>
+    </div>
+
+    <!-- Series Section -->
+    <div class="section" id="seriesSection">
+      <div class="section-header">
+        <div class="section-label">Essay Series</div>
+        <div class="section-title">Collections</div>
+      </div>
+      <div id="seriesContainer">
+        <div class="loading">Loading series...</div>
+      </div>
+    </div>
+
+    <!-- Single Essays Section -->
+    <div class="section" id="standaloneSection">
+      <div class="section-header">
+        <div class="section-label">Standalone Essays</div>
+        <div class="section-title">Individual Pieces</div>
+      </div>
+      <div id="postsContainer">
+        <div class="loading">Loading essays...</div>
+      </div>
+    </div>
+
+  </div>
+
+</div>
+
+<!-- Footer -->
+<footer class="footer">
+  <div class="footer-content">
+    <div class="footer-grid">
+      
+      <!-- Subscribe Section -->
+      <div class="footer-section">
+        <h3>Subscribe</h3>
+        <p>Join the cognitive rebellion. Receive underThought directly in your inbox.</p>
+        <div class="substack-embed">
+          <iframe src="https://byfaithohio.substack.com/embed" width="480" height="320" style="border: 1px solid #EEE; background: white" frameborder="0" scrolling="no"></iframe>
+        </div>
+      </div>
+
+      <!-- Connect Section -->
+      <div class="footer-section">
+        <h3>Connect</h3>
+        <p>Continue the conversation across platforms.</p>
+        <div class="social-links">
+          <a href="https://instagram.com/byfaithohio" class="social-link" target="_blank" rel="noopener">Instagram</a>
+          <a href="https://linkedin.com/in/byfaithohio" class="social-link" target="_blank" rel="noopener">LinkedIn</a>
+          <a href="https://www.faithohio.com" class="social-link" target="_blank" rel="noopener">Website</a>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="footer-bottom">
+      <div class="footer-credit">
+        © 2026 underThought · <a href="https://www.faithohio.com" target="_blank">Faith Ohio</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<!-- Subscribe Modal -->
+<div class="modal" id="subscribeModal">
+  <div class="modal-content">
+    <button class="modal-close" onclick="closeSubscribeModal()">×</button>
+    <h2>Subscribe to underThought</h2>
+    <p>Join the cognitive rebellion. Receive essays directly in your inbox.</p>
+    <iframe src="https://byfaithohio.substack.com/embed" width="100%" height="320" style="border: 1px solid #EEE; background: white" frameborder="0" scrolling="no"></iframe>
+  </div>
+</div>
+
+<script src="blog.js"></script>
+</body>
+</html>

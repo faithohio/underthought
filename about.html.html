@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>About - underThought</title>
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Anybody:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0c0c0c;
+    --surface: #141414;
+    --surface2: #1c1c1c;
+    --border: rgba(255,255,255,0.06);
+    --gold: #c9a96e;
+    --gold-dim: rgba(201,169,110,0.15);
+    --gold-border: rgba(201,169,110,0.3);
+    --white: #f2ede6;
+    --muted: #6b6560;
+    --accent: #8b7355;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--bg);
+    color: var(--white);
+    font-family: 'Anybody', sans-serif;
+    font-weight: 300;
+    line-height: 1.6;
+    min-height: 100vh;
+  }
+
+  .container { max-width: 1200px; margin: 0 auto; padding: 0 48px; }
+
+  /* NAVBAR */
+  .navbar {
+    position: sticky;
+    top: 0;
+    background: var(--bg);
+    border-bottom: 1px solid var(--border);
+    z-index: 1000;
+    backdrop-filter: blur(10px);
+  }
+
+  .navbar-content {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 24px 48px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .nav-logo {
+    font-family: 'Anton', sans-serif;
+    font-size: 24px;
+    font-weight: 400;
+    font-style: italic;
+    text-decoration: none;
+    letter-spacing: 0.5px;
+  }
+
+  .logo-under {
+    background: linear-gradient(135deg, var(--gold) 0%, #000000 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .logo-thought {
+    color: var(--white);
+  }
+
+  .nav-links {
+    display: flex;
+    gap: 40px;
+    align-items: center;
+  }
+
+  .nav-link {
+    font-size: 11px;
+    letter-spacing: 2.5px;
+    text-transform: uppercase;
+    color: var(--muted);
+    text-decoration: none;
+    transition: color 0.3s ease;
+    cursor: pointer;
+    font-weight: 400;
+  }
+
+  .nav-link:hover {
+    color: var(--gold);
+  }
+
+  .nav-link.active {
+    color: var(--gold);
+  }
+
+  /* HEADER */
+  .header {
+    padding: 120px 0 80px;
+    border-bottom: 1px solid var(--border);
+    margin-bottom: 80px;
+  }
+
+  .header h1 {
+    font-family: 'Anton', sans-serif;
+    font-size: 72px;
+    font-weight: 400;
+    font-style: italic;
+    line-height: 1.1;
+    margin-bottom: 24px;
+    letter-spacing: 1px;
+    color: var(--white);
+  }
+
+  .header-sub {
+    font-size: 16px;
+    color: var(--muted);
+    letter-spacing: 0.5px;
+    line-height: 1.8;
+    max-width: 600px;
+  }
+
+  /* CONTENT */
+  .content {
+    max-width: 800px;
+    margin: 0 auto;
+    padding-bottom: 120px;
+  }
+
+  .content p {
+    font-size: 18px;
+    line-height: 1.9;
+    margin-bottom: 2em;
+    color: var(--white);
+  }
+
+  .content blockquote {
+    border-left: 3px solid var(--gold-border);
+    padding-left: 40px;
+    margin: 3em 0;
+    font-family: 'Anton', sans-serif;
+    font-size: 28px;
+    font-style: italic;
+    line-height: 1.5;
+    color: var(--muted);
+    letter-spacing: 0.5px;
+  }
+
+  .content .closing {
+    font-weight: 500;
+    font-style: italic;
+    color: var(--gold);
+    font-size: 20px;
+    margin-top: 3em;
+    line-height: 1.7;
+  }
+
+  /* FOOTER */
+  .footer {
+    border-top: 1px solid var(--border);
+    padding: 60px 0 80px;
+  }
+
+  .footer-content {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 48px;
+  }
+
+  .footer-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 80px;
+    margin-bottom: 60px;
+  }
+
+  .footer-section h3 {
+    font-family: 'Anton', sans-serif;
+    font-size: 24px;
+    font-weight: 400;
+    font-style: italic;
+    margin-bottom: 24px;
+    color: var(--gold);
+    letter-spacing: 0.5px;
+  }
+
+  .footer-section p {
+    font-size: 14px;
+    color: var(--muted);
+    line-height: 1.8;
+    margin-bottom: 20px;
+  }
+
+  .substack-embed {
+    margin-top: 24px;
+  }
+
+  .substack-embed iframe {
+    width: 100%;
+    max-width: 480px;
+    height: 320px;
+    border: 1px solid var(--border);
+    background: var(--surface);
+  }
+
+  .social-links {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  .social-link {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    color: var(--muted);
+    text-decoration: none;
+    font-size: 14px;
+    transition: color 0.3s ease;
+    padding: 8px 0;
+  }
+
+  .social-link:hover {
+    color: var(--gold);
+  }
+
+  .social-link::before {
+    content: '→';
+    color: var(--gold);
+    font-size: 16px;
+  }
+
+  .footer-bottom {
+    padding-top: 40px;
+    border-top: 1px solid var(--border);
+    text-align: center;
+  }
+
+  .footer-credit {
+    font-size: 11px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+
+  .footer-credit a {
+    color: var(--gold);
+    text-decoration: none;
+  }
+
+  .footer-credit a:hover {
+    text-decoration: underline;
+  }
+
+  /* RESPONSIVE */
+  @media (max-width: 900px) {
+    .footer-grid {
+      grid-template-columns: 1fr;
+      gap: 40px;
+    }
+  }
+
+  @media (max-width: 600px) {
+    .container,
+    .navbar-content,
+    .footer-content {
+      padding-left: 24px;
+      padding-right: 24px;
+    }
+
+    .header {
+      padding-top: 80px;
+    }
+
+    .header h1 {
+      font-size: 48px;
+    }
+
+    .navbar-content {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 20px;
+    }
+
+    .nav-links {
+      gap: 24px;
+    }
+
+    .content p {
+      font-size: 16px;
+    }
+
+    .content blockquote {
+      font-size: 22px;
+      padding-left: 24px;
+    }
+
+    .content .closing {
+      font-size: 18px;
+    }
+  }
+</style>
+</head>
+<body>
+
+<!-- Navbar -->
+<nav class="navbar">
+  <div class="navbar-content">
+    <a href="index.html" class="nav-logo">
+      <span class="logo-under">under</span><span class="logo-thought">Thought</span>
+    </a>
+    <div class="nav-links">
+      <a class="nav-link" href="index.html">Home</a>
+      <a class="nav-link active" href="about.html">About</a>
+      <a class="nav-link" href="index.html#subscribe" onclick="event.preventDefault(); window.location.href='index.html'; setTimeout(() => openSubscribeModal(), 100);">Subscribe</a>
+    </div>
+  </div>
+</nav>
+
+<div class="container">
+  
+  <!-- Header -->
+  <div class="header">
+    <h1>About underThought</h1>
+    <div class="header-sub">An invitation to intellectual disobedience</div>
+  </div>
+
+  <!-- Content -->
+  <div class="content">
+    <p>underThought begins with a suspicion: that modern intelligence, for all its information and innovation, has become compliant. We mistake speed for substance, visibility for value, output for depth, and consensus for truth. Our thinking serves the systems it should be questioning. And at the root of our collective disorientation is the truth that the mind is waging war on the very constraints it created to make sense of itself.</p>
+
+    <p>underThought is a revolt against this internal captivity. It stands as a philosophical project dedicated to cognitive rebellion—to turn the mind on itself.</p>
+
+    <p>At its core, underThought serves as ongoing intelligence for builders who understand that to think clearly, now, is to quietly participate in the architecture of what comes next.</p>
+
+    <blockquote>The future will not be shaped by those who keep pace with it, but by those capable of structuring meaning ahead of it—those who can perceive what is emerging before it hardens into inevitability.</blockquote>
+
+    <p>This is an invitation to intellectual disobedience. To refuse the anesthetic of consensus. And to practice thinking not as commentary, but as agency.</p>
+
+    <p class="closing">Welcome to underThought—where we dig beneath modern consciousness.</p>
+  </div>
+
+</div>
+
+<!-- Footer -->
+<footer class="footer">
+  <div class="footer-content">
+    <div class="footer-grid">
+      
+      <!-- Subscribe Section -->
+      <div class="footer-section">
+        <h3>Subscribe</h3>
+        <p>Join the cognitive rebellion. Receive underThought directly in your inbox.</p>
+        <div class="substack-embed">
+          <iframe src="https://byfaithohio.substack.com/embed" width="480" height="320" style="border: 1px solid #EEE; background: white" frameborder="0" scrolling="no"></iframe>
+        </div>
+      </div>
+
+      <!-- Connect Section -->
+      <div class="footer-section">
+        <h3>Connect</h3>
+        <p>Continue the conversation across platforms.</p>
+        <div class="social-links">
+          <a href="https://instagram.com/byfaithohio" class="social-link" target="_blank" rel="noopener">Instagram</a>
+          <a href="https://linkedin.com/in/byfaithohio" class="social-link" target="_blank" rel="noopener">LinkedIn</a>
+          <a href="https://www.faithohio.com" class="social-link" target="_blank" rel="noopener">Website</a>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="footer-bottom">
+      <div class="footer-credit">
+        © 2026 underThought · <a href="https://www.faithohio.com" target="_blank">Faith Ohio</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>
