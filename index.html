@@ -15,7 +15,7 @@
     --gold-dim: rgba(201,169,110,0.15);
     --gold-border: rgba(201,169,110,0.3);
     --white: #f2ede6;
-    --muted: #6b6560;
+    --muted: #a8a29e;
     --accent: #8b7355;
   }
 
@@ -820,6 +820,111 @@
     }
   }
 
+  /* ABOUT THE AUTHOR */
+  .about-author {
+    max-width: 1200px;
+    margin: 0 auto 80px;
+    padding: 0 48px;
+  }
+
+  .about-author-box {
+    border: 1px solid rgba(255,255,255,0.2);
+    display: grid;
+    grid-template-columns: 280px 1fr;
+    overflow: hidden;
+  }
+
+  .about-author-image {
+    width: 100%;
+    height: 100%;
+    min-height: 320px;
+    object-fit: cover;
+    object-position: center top;
+    display: block;
+  }
+
+  .about-author-image-placeholder {
+    width: 100%;
+    min-height: 320px;
+    background: var(--surface2);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--muted);
+    font-size: 11px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+  }
+
+  .about-author-text {
+    padding: 48px 52px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+
+  .about-author-label {
+    font-size: 9px;
+    letter-spacing: 3.5px;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 16px;
+    font-weight: 400;
+  }
+
+  .about-author-name {
+    font-family: 'Anton', sans-serif;
+    font-size: 42px;
+    font-weight: 400;
+    font-style: italic;
+    color: var(--white);
+    letter-spacing: 0.5px;
+    margin-bottom: 24px;
+    line-height: 1.1;
+  }
+
+  .about-author-bio {
+    font-size: 14px;
+    line-height: 1.9;
+    color: var(--muted);
+    max-width: 560px;
+  }
+
+  .about-author-bio p {
+    margin-bottom: 1em;
+  }
+
+  .about-author-bio p:last-child {
+    margin-bottom: 0;
+  }
+
+  @media (max-width: 900px) {
+    .about-author-box {
+      grid-template-columns: 1fr;
+    }
+
+    .about-author-image,
+    .about-author-image-placeholder {
+      min-height: 280px;
+      max-height: 320px;
+      width: 100%;
+    }
+  }
+
+  @media (max-width: 600px) {
+    .about-author {
+      padding: 0 24px;
+    }
+
+    .about-author-text {
+      padding: 36px 28px;
+    }
+
+    .about-author-name {
+      font-size: 32px;
+    }
+  }
+
   /* CONFIG NOTICE */
   .config-notice {
     background: var(--gold-dim);
@@ -857,6 +962,7 @@
 <!-- Navbar -->
 <nav class="navbar">
   <div class="navbar-content">
+    <a class="nav-link" onclick="backToMain()">Home</a>
     <a class="nav-link" id="navSeries" onclick="showSeriesOnly()">Series</a>
     <a class="nav-link" href="about.html">About</a>
     <a class="nav-link" onclick="openSubscribeModal()">Subscribe</a>
@@ -942,6 +1048,27 @@
   </div>
 
 </div>
+
+<!-- About the Author -->
+<section class="about-author">
+  <div class="about-author-box">
+    <!-- Replace the src below with the path to your photo, e.g. src="images/faith.jpg" -->
+    <img class="about-author-image" src="images/faith.jpg" alt="Faith Ohio"
+      onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+    <div class="about-author-image-placeholder" style="display:none;">Add your photo</div>
+    <div class="about-author-text">
+      <div class="about-author-label">About the Author</div>
+      <h2 class="about-author-name">Faith Ohio</h2>
+      <div class="about-author-bio">
+       <p>Faith Ohio is a strategic advisor, cultural futurist, essayist-thinker, and guide to builders of the future. Her work sits at the intersection of culture, power, and transformation; helping leaders and builders navigate threshold moments with clarity and conviction.</p>
+<p>As a diagnostician and threshold guide, Faith has invested over half a decade studying the mechanics of influence, the architecture of cultural shifts, and the patterns that separate those who shape the future from those who merely react to it. Her work guides builders—of systems, people, and ideas—to recognize inflection points before they become obvious, to read the weak signals that precede seismic change, and to act with precision when the window for meaningful intervention is still open.</p>
+<p>Faith believes that the most valuable commodity in the 21st century is not information, but interpretive capacity—the ability to see what others miss, think beyond inherited frameworks, and act before consensus forms. This belief is what birthed underThought, her philosophical journal. Through underThought, Faith documents ideas to help builders think and thinkers build—commensurate to the degree of change they seek to create through their work and in the world.</p>
+<p>She is the author and researcher of Faith Ohio Intelligence (FOi), an annual strategic intelligence brief that provides prescient analysis into the cultural currents, defining shifts, and key opportunities shaping the year. Faith is also the author of two defining books till date—ANAMNESIS and Her Proprietary Theory of Self Examination.</p>
+<p>Faith is obsessed with the vision of a new human (HUMANGODS) and fashions her work in service of this vision. At the core, her work activates dormant genius in people, systems, and ideas.</p>
+      </div>
+    </div>
+  </div>
+</section>
 
 <!-- Footer -->
 <footer class="footer">
