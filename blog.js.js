@@ -17,7 +17,7 @@ let currentView = 'main';
 // GOOGLE SHEETS INTEGRATION
 // ============================================
 async function fetchPosts() {
-  if (SHEET_ID === '1qlfTrLD3DAdEODruqUuf2SctaQZE71viz8Nq8nXPyQI') {
+  if (!SHEET_ID || SHEET_ID === 'YOUR_SHEET_ID_HERE') {
     posts = getSamplePosts();
     init();
     return;
@@ -27,7 +27,7 @@ async function fetchPosts() {
     const notice = document.getElementById('configNotice');
     if (notice) notice.style.display = 'none';
 
-    const url = `https://docs.google.com/spreadsheets/d/${1qlfTrLD3DAdEODruqUuf2SctaQZE71viz8Nq8nXPyQI}/gviz/tq?tqx=out:json&sheet=${Posts}`;
+    const url = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:json&sheet=${SHEET_NAME}`;
     const response = await fetch(url);
     const text = await response.text();
     const json = JSON.parse(text.substring(47).slice(0, -2));
