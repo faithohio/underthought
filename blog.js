@@ -43,7 +43,7 @@ async function fetchPosts() {
         content: cells[4]?.v || '',
         tags: cells[5]?.v ? cells[5].v.split(',').map(t => t.trim()) : [],
         series: cells[6]?.v || null,
-        seriesDescription: cells[7]?.v || null
+        seriesDescription: cells[7]?.v || null,
         imageUrl: cells[8]?.v || null
       };
     }).filter(post => post.title);
@@ -73,7 +73,8 @@ function getSamplePosts() {
 <p>How quiet people are here, even in crowds. How the subway platforms feel more orderly than a library back home. How lost feels different when you can't read the signs—not scary, but <em>sharpening</em>.</p>`,
       tags: ["travel", "observation"],
       series: "Field Notes",
-      seriesDescription: "Observations from different cities and states of mind"
+      seriesDescription: "Observations from different cities and states of mind",
+      imageUrl: null
     },
     {
       id: 2,
@@ -90,7 +91,8 @@ function getSamplePosts() {
 <p>Nobody rushes here. Or maybe they do, but differently. There's an efficiency that doesn't feel frantic.</p>`,
       tags: ["travel", "observation"],
       series: "Field Notes",
-      seriesDescription: "Observations from different cities and states of mind"
+      seriesDescription: "Observations from different cities and states of mind",
+      imageUrl: null
     },
     {
       id: 3,
@@ -107,7 +109,8 @@ function getSamplePosts() {
 <p>The interesting thing isn't what I'm doing differently—it's what's happening to the rest of my day. There's this quality of <em>spaciousness</em> that carries through.</p>`,
       tags: ["reflection", "slow living"],
       series: null,
-      seriesDescription: null
+      seriesDescription: null,
+      imageUrl: null
     },
     {
       id: 4,
@@ -126,7 +129,8 @@ function getSamplePosts() {
 <p>A meditation on the color blue and on heartbreak, structured as numbered fragments. It's formally <em>strange</em> and emotionally devastating.</p>`,
       tags: ["books", "reflection"],
       series: null,
-      seriesDescription: null
+      seriesDescription: null,
+      imageUrl: null
     }
   ];
 }
@@ -235,21 +239,6 @@ function getFilteredPosts(showAll = false) {
   
   return filtered;
 }
-  
-  if (activeFilter) {
-    filtered = filtered.filter(post => post.tags.includes(activeFilter));
-  }
-  
-  if (searchQuery) {
-    filtered = filtered.filter(post => 
-      post.title.toLowerCase().includes(searchQuery) ||
-      post.excerpt.toLowerCase().includes(searchQuery) ||
-      post.tags.some(tag => tag.toLowerCase().includes(searchQuery))
-    );
-  }
-  
-  return filtered;
-}
 
 function getFilteredSeries() {
   let filtered = series;
@@ -320,45 +309,39 @@ function renderPosts(showAll = false) {
   }
   
   container.innerHTML = `
-  <div class="posts-grid">
-    ${filtered.map(post => `
-      <div class="post-card" onclick="showArticle(${post.id})">
-        ${post.imageUrl ? `
-          <div class="post-image-container">
-            <img class="post-image" src="${post.imageUrl}" alt="${post.title}">
-            <div class="post-image-overlay"></div>
+    <div class="posts-grid">
+      ${filtered.map(post => `
+        <div class="post-card" onclick="showArticle(${post.id})">
+          ${post.imageUrl ? `
+            <div class="post-image-container">
+              <img class="post-image" src="${post.imageUrl}" alt="${post.title}">
+              <div class="post-image-overlay"></div>
+            </div>
+          ` : ''}
+          <div class="post-content">
+            <div class="post-meta">${post.date} · ${post.readTime}</div>
+            <h2 class="post-title">${post.title}</h2>
+            <p class="post-excerpt">${post.excerpt}</p>
+            <div class="post-tags">
+              ${post.tags.map(tag => `<span class="tag">${tag}</span>`).join('')}
+            </div>
+            <div class="read-more">Read Essay</div>
           </div>
-        ` : ''}
-        <div class="post-content">
-          <div class="post-meta">${post.date} · ${post.readTime}</div>
-          <h2 class="post-title">${post.title}</h2>
-          <p class="post-excerpt">${post.excerpt}</p>
-          <div class="post-tags">
-            ${post.tags.map(tag => `<span class="tag">${tag}</span>`).join('')}
-          </div>
-          <div class="read-more">Read Essay</div>
-        </div>
-      </div>
-    `).join('')}
-  </div>
-`;// Show/hide "View All" button
-const allPosts = posts.filter(post => !post.series);
-const viewAllBtn = document.getElementById('viewAllContainer');
-if (!showAll && !activeFilter && !searchQuery && allPosts.length > 6) {
-  viewAllBtn.style.display = 'block';
-} else {
-  viewAllBtn.style.display = 'none';
-}
-          <h2 class="post-title">${post.title}</h2>
-          <p class="post-excerpt">${post.excerpt}</p>
-          <div class="post-tags">
-            ${post.tags.map(tag => `<span class="tag">${tag}</span>`).join('')}
-          </div>
-          <div class="read-more">Read Essay</div>
         </div>
       `).join('')}
     </div>
   `;
+  
+  // Show/hide "View All" button
+  const allPosts = posts.filter(post => !post.series);
+  const viewAllBtn = document.getElementById('viewAllContainer');
+  if (viewAllBtn) {
+    if (!showAll && !activeFilter && !searchQuery && allPosts.length > 6) {
+      viewAllBtn.style.display = 'block';
+    } else {
+      viewAllBtn.style.display = 'none';
+    }
+  }
 }
 
 // ============================================
@@ -394,13 +377,21 @@ function showSeries(seriesName) {
   const grid = document.getElementById('seriesPostsGrid');
   grid.innerHTML = seriesData.posts.map(post => `
     <div class="post-card" onclick="showArticle(${post.id})">
-      <div class="post-meta">${post.date} · ${post.readTime}</div>
-      <h2 class="post-title">${post.title}</h2>
-      <p class="post-excerpt">${post.excerpt}</p>
-      <div class="post-tags">
-        ${post.tags.map(tag => `<span class="tag">${tag}</span>`).join('')}
+      ${post.imageUrl ? `
+        <div class="post-image-container">
+          <img class="post-image" src="${post.imageUrl}" alt="${post.title}">
+          <div class="post-image-overlay"></div>
+        </div>
+      ` : ''}
+      <div class="post-content">
+        <div class="post-meta">${post.date} · ${post.readTime}</div>
+        <h2 class="post-title">${post.title}</h2>
+        <p class="post-excerpt">${post.excerpt}</p>
+        <div class="post-tags">
+          ${post.tags.map(tag => `<span class="tag">${tag}</span>`).join('')}
+        </div>
+        <div class="read-more">Read Essay</div>
       </div>
-      <div class="read-more">Read Essay</div>
     </div>
   `).join('');
   
@@ -469,6 +460,17 @@ function closeSubscribeModal() {
   document.getElementById('subscribeModal').classList.remove('active');
 }
 
+// ============================================
+// VIEW ALL ESSAYS
+// ============================================
+function viewAllEssays() {
+  renderPosts(true);
+  document.getElementById('viewAllContainer').style.display = 'none';
+}
+
+// ============================================
+// EVENT LISTENERS
+// ============================================
 document.addEventListener('DOMContentLoaded', () => {
   const modal = document.getElementById('subscribeModal');
   if (modal) {
@@ -483,8 +485,4 @@ document.addEventListener('DOMContentLoaded', () => {
 // ============================================
 // START
 // ============================================
-function viewAllEssays() {
-  renderPosts(true);
-  document.getElementById('viewAllContainer').style.display = 'none';
-}
 fetchPosts();
