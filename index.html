@@ -296,7 +296,10 @@
   display: flex;
   flex-direction: column;
 }
-
+.post-card > :not(.post-image-container):first-child {
+  padding: 40px 36px;
+}
+  
   .post-card:hover {
     background: var(--surface2);
     border-color: var(--gold-border);
