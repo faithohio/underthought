@@ -44,6 +44,7 @@ async function fetchPosts() {
         tags: cells[5]?.v ? cells[5].v.split(',').map(t => t.trim()) : [],
         series: cells[6]?.v || null,
         seriesDescription: cells[7]?.v || null
+        imageUrl: cells[8]?.v || null
       };
     }).filter(post => post.title);
     
@@ -212,8 +213,28 @@ function setupSearch() {
 // ============================================
 // FILTERING
 // ============================================
-function getFilteredPosts() {
+function getFilteredPosts(showAll = false) {
   let filtered = posts.filter(post => !post.series);
+  
+  if (activeFilter) {
+    filtered = filtered.filter(post => post.tags.includes(activeFilter));
+  }
+  
+  if (searchQuery) {
+    filtered = filtered.filter(post => 
+      post.title.toLowerCase().includes(searchQuery) ||
+      post.excerpt.toLowerCase().includes(searchQuery) ||
+      post.tags.some(tag => tag.toLowerCase().includes(searchQuery))
+    );
+  }
+  
+  // Limit to 6 unless showAll is true or there's an active filter/search
+  if (!showAll && !activeFilter && !searchQuery) {
+    filtered = filtered.slice(0, 6);
+  }
+  
+  return filtered;
+}
   
   if (activeFilter) {
     filtered = filtered.filter(post => post.tags.includes(activeFilter));
@@ -284,9 +305,9 @@ function renderSeries() {
 // ============================================
 // RENDER POSTS
 // ============================================
-function renderPosts() {
+function renderPosts(showAll = false) {
   const container = document.getElementById('postsContainer');
-  const filtered = getFilteredPosts();
+  const filtered = getFilteredPosts(showAll);
   
   if (filtered.length === 0) {
     container.innerHTML = `
@@ -299,10 +320,35 @@ function renderPosts() {
   }
   
   container.innerHTML = `
-    <div class="posts-grid">
-      ${filtered.map(post => `
-        <div class="post-card" onclick="showArticle(${post.id})">
+  <div class="posts-grid">
+    ${filtered.map(post => `
+      <div class="post-card" onclick="showArticle(${post.id})">
+        ${post.imageUrl ? `
+          <div class="post-image-container">
+            <img class="post-image" src="${post.imageUrl}" alt="${post.title}">
+            <div class="post-image-overlay"></div>
+          </div>
+        ` : ''}
+        <div class="post-content">
           <div class="post-meta">${post.date} · ${post.readTime}</div>
+          <h2 class="post-title">${post.title}</h2>
+          <p class="post-excerpt">${post.excerpt}</p>
+          <div class="post-tags">
+            ${post.tags.map(tag => `<span class="tag">${tag}</span>`).join('')}
+          </div>
+          <div class="read-more">Read Essay</div>
+        </div>
+      </div>
+    `).join('')}
+  </div>
+`;// Show/hide "View All" button
+const allPosts = posts.filter(post => !post.series);
+const viewAllBtn = document.getElementById('viewAllContainer');
+if (!showAll && !activeFilter && !searchQuery && allPosts.length > 6) {
+  viewAllBtn.style.display = 'block';
+} else {
+  viewAllBtn.style.display = 'none';
+}
           <h2 class="post-title">${post.title}</h2>
           <p class="post-excerpt">${post.excerpt}</p>
           <div class="post-tags">
@@ -437,4 +483,8 @@ document.addEventListener('DOMContentLoaded', () => {
 // ============================================
 // START
 // ============================================
+function viewAllEssays() {
+  renderPosts(true);
+  document.getElementById('viewAllContainer').style.display = 'none';
+}
 fetchPosts();
