@@ -288,12 +288,14 @@
   }
 
   .post-card {
-    background: var(--surface);
-    padding: 40px 36px;
-    cursor: pointer;
-    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-    border: 1px solid transparent;
-  }
+  background: var(--surface);
+  cursor: pointer;
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  border: 1px solid transparent;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
 
   .post-card:hover {
     background: var(--surface2);
@@ -304,7 +306,42 @@
   .post-card:hover .post-title {
     color: var(--gold);
   }
+/* POST IMAGE */
+.post-image {
+  width: 100%;
+  height: 240px;
+  object-fit: cover;
+  display: block;
+  transition: transform 0.5s ease;
+}
 
+.post-card:hover .post-image {
+  transform: scale(1.05);
+}
+
+.post-image-container {
+  overflow: hidden;
+  background: var(--surface2);
+  position: relative;
+}
+
+.post-image-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(to bottom, transparent 0%, rgba(12,12,12,0.3) 100%);
+  pointer-events: none;
+}
+
+/* POST CONTENT */
+.post-content {
+  padding: 36px;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
   .post-meta {
     font-size: 10px;
     letter-spacing: 2.5px;
@@ -326,12 +363,13 @@
     letter-spacing: 0.5px;
   }
 
-  .post-excerpt {
-    font-size: 14px;
-    line-height: 1.8;
-    color: var(--muted);
-    margin-bottom: 24px;
-  }
+ .post-excerpt {
+  font-size: 14px;
+  line-height: 1.8;
+  color: var(--muted);
+  margin-bottom: 24px;
+  flex: 1;
+}
 
   .post-tags {
     display: flex;
@@ -1034,16 +1072,19 @@
       </div>
     </div>
 
-    <!-- Single Essays Section -->
-    <div class="section" id="standaloneSection">
-      <div class="section-header">
-        <div class="section-label">Standalone Essays</div>
-        <div class="section-title">Individual Pieces</div>
-      </div>
-      <div id="postsContainer">
-        <div class="loading">Loading essays...</div>
-      </div>
-    </div>
+  <!-- Single Essays Section -->
+<div class="section" id="standaloneSection">
+  <div class="section-header">
+    <div class="section-label">Standalone Essays</div>
+    <div class="section-title">Individual Pieces</div>
+  </div>
+  <div id="postsContainer">
+    <div class="loading">Loading essays...</div>
+  </div>
+  <div id="viewAllContainer" style="text-align: center; margin-top: 40px; display: none;">
+    <button onclick="viewAllEssays()" style="background: transparent; border: 1px solid rgba(255,255,255,0.2); color: #c9a96e; padding: 14px 32px; font-size: 11px; letter-spacing: 2px; text-transform: uppercase; cursor: pointer; font-family: 'Anybody', sans-serif; font-weight: 400; transition: all 0.3s ease;">View All Essays</button>
+  </div>
+</div>
 
   </div>
 
