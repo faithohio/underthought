@@ -939,17 +939,19 @@
   }
 
   @media (max-width: 900px) {
-    .about-author-box {
-      grid-template-columns: 1fr;
-    }
-
-    .about-author-image,
-    .about-author-image-placeholder {
-      min-height: 280px;
-      max-height: 320px;
-      width: 100%;
-    }
+  .about-author-box {
+    grid-template-columns: 1fr;
   }
+
+  .about-author-image,
+  .about-author-image-placeholder {
+    min-height: 400px;
+    max-height: 500px;
+    width: 100%;
+    object-fit: cover;
+    object-position: center center;
+  }
+}
 
   @media (max-width: 600px) {
     .about-author {
