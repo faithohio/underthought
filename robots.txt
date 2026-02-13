@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://underthought.faithohio.com/sitemap.xml
