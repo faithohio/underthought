@@ -109,11 +109,18 @@
   }
 
   .logo-under {
-    background: linear-gradient(135deg, var(--gold) 0%, #000000 100%);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-  }
+  background: linear-gradient(135deg, var(--gold) 0%, #000000 50%, var(--gold) 100%);
+  background-size: 200% 100%;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  animation: shimmer 3s ease-in-out infinite;
+}
+
+@keyframes shimmer {
+  0%, 100% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+}
 
   .logo-thought {
     color: var(--white);
@@ -297,6 +304,27 @@
     color: var(--gold);
     font-weight: 400;
   }
+  /* SERIES THUMBNAILS */
+.series-thumbnails {
+  display: flex;
+  gap: 6px;
+  margin-bottom: 16px;
+  padding-bottom: 16px;
+  border-bottom: 1px solid var(--border);
+}
+
+.series-thumbnail {
+  width: 48px;
+  height: 48px;
+  object-fit: cover;
+  border: 1px solid var(--border);
+  transition: all 0.3s ease;
+}
+
+.series-card:hover .series-thumbnail {
+  border-color: var(--gold-border);
+  transform: translateY(-2px);
+}
 
   /* POSTS GRID */
   .posts-grid {
