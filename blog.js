@@ -282,9 +282,16 @@ function renderSeries() {
             <p class="series-description">${s.description}</p>
           </div>
           <div>
-            <div class="series-count"><span>${s.posts.length}</span> ${s.posts.length === 1 ? 'essay' : 'essays'}</div>
-            <div class="read-more">View Series</div>
-          </div>
+  ${s.posts.some(p => p.imageUrl) ? `
+    <div class="series-thumbnails">
+      ${s.posts.slice(0, 4).map(p => p.imageUrl ? `
+        <img src="${p.imageUrl}" alt="${p.title}" class="series-thumbnail">
+      ` : '').join('')}
+    </div>
+  ` : ''}
+  <div class="series-count"><span>${s.posts.length}</span> ${s.posts.length === 1 ? 'essay' : 'essays'}</div>
+  <div class="read-more">View Series</div>
+</div>
         </div>
       `).join('')}
     </div>
