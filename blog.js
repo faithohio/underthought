@@ -50,6 +50,8 @@ async function fetchPosts() {
     }).filter(post => post.title);
     
     init();
+    hideLoader();
+    return Promise.resolve();
   } catch (error) {
     console.error('Error fetching posts:', error);
     posts = getSamplePosts();
