@@ -1203,6 +1203,81 @@
     border-bottom: none;
   }
 }
+  /* LOADING OVERLAY */
+.page-loader {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: var(--bg);
+  z-index: 9999;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  transition: opacity 0.6s ease, visibility 0.6s ease;
+}
+
+.page-loader.hidden {
+  opacity: 0;
+  visibility: hidden;
+}
+
+.loader-logo {
+  font-family: 'Anton', sans-serif;
+  font-size: 48px;
+  font-weight: 400;
+  font-style: italic;
+  letter-spacing: 1px;
+  margin-bottom: 40px;
+  animation: loaderPulse 2s ease-in-out infinite;
+}
+
+.loader-logo-under {
+  color: var(--gold);
+}
+
+.loader-logo-thought {
+  color: var(--white);
+}
+
+@keyframes loaderPulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.4; }
+}
+
+.loader-bar-track {
+  width: 200px;
+  height: 1px;
+  background: var(--border);
+  position: relative;
+  overflow: hidden;
+}
+
+.loader-bar-fill {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 0%;
+  background: var(--gold);
+  animation: loaderBar 1.8s ease-in-out infinite;
+}
+
+@keyframes loaderBar {
+  0% { left: -100%; width: 100%; }
+  100% { left: 100%; width: 100%; }
+}
+
+.loader-tagline {
+  margin-top: 24px;
+  font-size: 9px;
+  letter-spacing: 3.5px;
+  text-transform: uppercase;
+  color: var(--muted);
+  font-weight: 400;
+}
   /* CONFIG NOTICE */
   .config-notice {
     background: var(--gold-dim);
@@ -1262,6 +1337,16 @@
 </head>
 <body>
 
+  <!-- Page Loader -->
+<div class="page-loader" id="pageLoader">
+  <div class="loader-logo">
+    <span class="loader-logo-under">under</span><span class="loader-logo-thought">Thought</span>
+  </div>
+  <div class="loader-bar-track">
+    <div class="loader-bar-fill"></div>
+  </div>
+  <div class="loader-tagline">A philosophical journal by Faith Ohio</div>
+</div>
 <!-- Navbar -->
 <nav class="navbar">
   <div class="navbar-content">
