@@ -438,6 +438,7 @@ updateURL('essay', postId);
   document.getElementById('articleView').classList.add('active');
   
   window.scrollTo({ top: 0, behavior: 'smooth' });
+initPopupTriggers();
 }
 
 // ============================================
@@ -445,6 +446,7 @@ updateURL('essay', postId);
 // ============================================
 function backToMain() {
   currentView = 'main';
+  cleanupPopupTriggers();
 updateURL('home');
   
   document.getElementById('standaloneSection').style.display = 'block';
@@ -489,6 +491,65 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 });
+// ============================================
+// SUBSCRIBE POPUP
+// ============================================
+let popupShown = false;
+let popupTimerRef = null;
+let scrollListenerRef = null;
+let exitListenerRef = null;
+
+function showSubscribePopup() {
+  if (popupShown) return;
+  if (currentView !== 'article') return;
+  
+  popupShown = true;
+  document.getElementById('subscribePopup').classList.add('active');
+  cleanupPopupTriggers();
+}
+
+function dismissPopup() {
+  document.getElementById('subscribePopup').classList.remove('active');
+  // Remember dismissal for this session
+  sessionStorage.setItem('popupDismissed', 'true');
+}
+
+function cleanupPopupTriggers() {
+  if (popupTimerRef) clearTimeout(popupTimerRef);
+  if (scrollListenerRef) window.removeEventListener('scroll', scrollListenerRef);
+  if (exitListenerRef) document.removeEventListener('mouseleave', exitListenerRef);
+}
+
+function initPopupTriggers() {
+  // Don't show if already dismissed this session
+  if (sessionStorage.getItem('popupDismissed')) return;
+  
+  popupShown = false;
+  cleanupPopupTriggers();
+
+  // Trigger 1: After 45 seconds of reading
+  popupTimerRef = setTimeout(() => {
+    showSubscribePopup();
+  }, 45000);
+
+  // Trigger 2: After scrolling to bottom of essay
+  scrollListenerRef = () => {
+    const articleContent = document.getElementById('articleContent');
+    if (!articleContent) return;
+    
+    const rect = articleContent.getBoundingClientRect();
+    const isAtBottom = rect.bottom <= window.innerHeight + 100;
+    
+    if (isAtBottom) showSubscribePopup();
+  };
+  window.addEventListener('scroll', scrollListenerRef);
+
+  // Trigger 3: Exit intent (mouse leaves top of page)
+  exitListenerRef = (e) => {
+    if (e.clientY <= 10) showSubscribePopup();
+  };
+  document.addEventListener('mouseleave', exitListenerRef);
+}
 // ============================================
 // SHARE BUTTONS
 // ============================================
