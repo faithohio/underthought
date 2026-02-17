@@ -1005,6 +1005,95 @@
     }
   }
 
+  /* SHARE BUTTONS */
+.share-section {
+  margin-top: 60px;
+  padding-top: 40px;
+  border-top: 1px solid var(--border);
+}
+
+.share-label {
+  font-size: 9px;
+  letter-spacing: 3.5px;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 20px;
+  font-weight: 400;
+}
+
+.share-buttons {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.share-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 20px;
+  border: 1px solid var(--border);
+  background: transparent;
+  color: var(--muted);
+  font-size: 11px;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  cursor: pointer;
+  text-decoration: none;
+  font-family: 'Anybody', sans-serif;
+  font-weight: 400;
+  transition: all 0.3s ease;
+}
+
+.share-btn:hover {
+  border-color: var(--gold-border);
+  color: var(--gold);
+}
+
+.share-btn.copied {
+  border-color: var(--gold-border);
+  color: var(--gold);
+}
+
+/* RELATED ESSAYS */
+.related-section {
+  margin-top: 60px;
+  padding-top: 40px;
+  border-top: 1px solid var(--border);
+  padding-bottom: 80px;
+}
+
+.related-label {
+  font-size: 9px;
+  letter-spacing: 3.5px;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 12px;
+  font-weight: 400;
+}
+
+.related-title {
+  font-family: 'Anton', sans-serif;
+  font-size: 28px;
+  font-weight: 400;
+  font-style: italic;
+  color: var(--white);
+  margin-bottom: 36px;
+  letter-spacing: 0.5px;
+}
+
+.related-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 2px;
+  background: var(--border);
+}
+
+@media (max-width: 900px) {
+  .related-grid {
+    grid-template-columns: 1fr;
+  }
+}
   /* CONFIG NOTICE */
   .config-notice {
     background: var(--gold-dim);
