@@ -193,8 +193,10 @@ function renderFilters() {
 function toggleFilter(tag) {
   if (activeFilter === tag) {
     activeFilter = null;
+    document.getElementById('seriesSection').style.display = 'block';
   } else {
     activeFilter = tag;
+    document.getElementById('seriesSection').style.display = 'none';
   }
   
   document.querySelectorAll('.filter-tag').forEach(el => {
