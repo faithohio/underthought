@@ -45,7 +45,7 @@ async function fetchPosts() {
         tags: cells[5]?.v ? cells[5].v.split(',').map(t => t.trim()) : [],
         series: cells[6]?.v || null,
         seriesDescription: cells[7]?.v || null,
-        imageUrl: cells[8]?.v || null
+        imageUrl: cells[8]?.v || null,
         featured: cells[10]?.v?.toString().toUpperCase() === 'YES'
       };
     }).filter(post => post.title);
