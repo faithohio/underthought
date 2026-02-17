@@ -428,7 +428,10 @@ updateURL('essay', postId);
   document.getElementById('articleTags').innerHTML = post.tags.map(tag => 
     `<span class="tag">${tag}</span>`
   ).join('');
-  document.getElementById('articleContent').innerHTML = post.content;
+  document.getElementById('articleContent').innerHTML = 
+  post.content + 
+  renderShareButtons(post) + 
+  renderRelatedPosts(post);
   
   document.getElementById('postsList').classList.add('hidden');
   document.getElementById('seriesView').classList.remove('active');
@@ -486,6 +489,133 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 });
+// ============================================
+// SHARE BUTTONS
+// ============================================
+function getShareURL(postId) {
+  return `${window.location.origin}/essay/${postId}`;
+}
+
+function shareTwitter(post) {
+  const url = encodeURIComponent(getShareURL(post.id));
+  const text = encodeURIComponent(`"${post.title}" by Faith Ohio`);
+  window.open(`https://twitter.com/intent/tweet?text=${text}&url=${url}`, '_blank');
+}
+
+function shareLinkedIn(post) {
+  const url = encodeURIComponent(getShareURL(post.id));
+  window.open(`https://www.linkedin.com/sharing/share-offsite/?url=${url}`, '_blank');
+}
+
+function shareWhatsApp(post) {
+  const url = encodeURIComponent(getShareURL(post.id));
+  const text = encodeURIComponent(`"${post.title}" by Faith Ohio - `);
+  window.open(`https://wa.me/?text=${text}${url}`, '_blank');
+}
+
+function shareFacebook(post) {
+  const url = encodeURIComponent(getShareURL(post.id));
+  window.open(`https://www.facebook.com/sharer/sharer.php?u=${url}`, '_blank');
+}
+
+function shareInstagram(post) {
+  copyLink(post);
+  alert('Link copied! You can now paste it in your Instagram bio or story.');
+}
+
+function copyLink(post) {
+  const url = getShareURL(post.id);
+  navigator.clipboard.writeText(url).then(() => {
+    const btn = document.getElementById('copyLinkBtn');
+    if (btn) {
+      btn.textContent = '✓ Copied!';
+      btn.classList.add('copied');
+      setTimeout(() => {
+        btn.textContent = 'Copy Link';
+        btn.classList.remove('copied');
+      }, 2000);
+    }
+  });
+}
+
+// ============================================
+// RELATED ESSAYS
+// ============================================
+function getRelatedPosts(post, count = 3) {
+  const otherPosts = posts.filter(p => p.id !== post.id);
+  
+  const scored = otherPosts.map(p => {
+    let score = 0;
+    
+    // Match by series
+    if (post.series && p.series === post.series) {
+      score += 3;
+    }
+    
+    // Match by tags
+    if (post.tags && p.tags) {
+      const sharedTags = post.tags.filter(t => p.tags.includes(t));
+      score += sharedTags.length * 2;
+    }
+    
+    return { post: p, score };
+  });
+  
+  // Sort by score, then shuffle equally scored ones
+  scored.sort((a, b) => b.score - a.score);
+  
+  return scored.slice(0, count).map(s => s.post);
+}
+
+function renderShareButtons(post) {
+  return `
+    <div class="share-section">
+      <div class="share-label">Share this essay</div>
+      <div class="share-buttons">
+        <button class="share-btn" onclick="shareTwitter(posts.find(p=>p.id===${post.id}))">Twitter/X</button>
+        <button class="share-btn" onclick="shareLinkedIn(posts.find(p=>p.id===${post.id}))">LinkedIn</button>
+        <button class="share-btn" onclick="shareWhatsApp(posts.find(p=>p.id===${post.id}))">WhatsApp</button>
+        <button class="share-btn" onclick="shareFacebook(posts.find(p=>p.id===${post.id}))">Facebook</button>
+        <button class="share-btn" onclick="shareInstagram(posts.find(p=>p.id===${post.id}))">Instagram</button>
+        <button class="share-btn" id="copyLinkBtn" onclick="copyLink(posts.find(p=>p.id===${post.id}))">Copy Link</button>
+      </div>
+    </div>
+  `;
+}
+
+function renderRelatedPosts(post) {
+  const related = getRelatedPosts(post, 3);
+  
+  if (related.length === 0) return '';
+  
+  return `
+    <div class="related-section">
+      <div class="related-label">Continue Reading</div>
+      <div class="related-title">Related Essays</div>
+      <div class="related-grid">
+        ${related.map(p => `
+          <div class="post-card" onclick="showArticle(${p.id})">
+            ${p.imageUrl ? `
+              <div class="post-image-container">
+                <img class="post-image" src="${p.imageUrl}" alt="${p.title}">
+                <div class="post-image-overlay"></div>
+              </div>
+            ` : ''}
+            <div class="post-content">
+              <div class="post-meta">${p.date} · ${p.readTime}</div>
+              <h2 class="post-title">${p.title}</h2>
+              <p class="post-excerpt">${p.excerpt}</p>
+              <div class="post-tags">
+                ${p.tags.map(tag => `<span class="tag">${tag}</span>`).join('')}
+              </div>
+              <div class="read-more">Read Essay</div>
+            </div>
+          </div>
+        `).join('')}
+      </div>
+    </div>
+  `;
+}
 // ============================================
 // URL MANAGEMENT
 // ============================================
