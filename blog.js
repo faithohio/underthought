@@ -46,6 +46,7 @@ async function fetchPosts() {
         series: cells[6]?.v || null,
         seriesDescription: cells[7]?.v || null,
         imageUrl: cells[8]?.v || null
+        featured: cells[10]?.v?.toString().toUpperCase() === 'YES'
       };
     }).filter(post => post.title);
     
@@ -146,6 +147,7 @@ function getSamplePosts() {
 function init() {
   processSeries();
   renderFilters();
+  renderFeatured();
   renderSeries();
   renderPosts();
   setupSearch();
@@ -694,6 +696,62 @@ function renderRelatedPosts(post) {
       </div>
     </div>
   `;
+}
+// ============================================
+// FEATURED ESSAY
+// ============================================
+function renderFeatured() {
+  const featured = posts.find(p => p.featured);
+  const section = document.getElementById('featuredSection');
+
+  if (!featured) {
+    section.style.display = 'none';
+    return;
+  }
+
+  section.style.display = 'block';
+
+  // Series badge
+  const seriesBadge = document.getElementById('featuredSeriesBadge');
+  if (featured.series) {
+    seriesBadge.textContent = featured.series;
+    seriesBadge.style.display = 'inline-block';
+  } else {
+    seriesBadge.style.display = 'none';
+  }
+
+  // Meta
+  document.getElementById('featuredMeta').textContent = 
+    `${featured.date} · ${featured.readTime}`;
+
+  // Title
+  document.getElementById('featuredTitle').textContent = featured.title;
+
+  // Excerpt
+  document.getElementById('featuredExcerpt').textContent = featured.excerpt;
+
+  // Tags
+  document.getElementById('featuredTags').innerHTML = featured.tags
+    .map(tag => `<span class="tag">${tag}</span>`)
+    .join('');
+
+  // Image
+  const imageWrap = document.getElementById('featuredImageWrap');
+  if (featured.imageUrl) {
+    imageWrap.innerHTML = `
+      <img class="featured-image" src="${featured.imageUrl}" alt="${featured.title}">
+      <div class="featured-image-overlay"></div>
+    `;
+  } else {
+    imageWrap.innerHTML = `
+      <div class="featured-image-placeholder">
+        <div class="featured-placeholder-text">uT</div>
+      </div>
+    `;
+  }
+
+  // Click to open
+  document.getElementById('featuredCard').onclick = () => showArticle(featured.id);
 }
 // ============================================
 // URL MANAGEMENT
