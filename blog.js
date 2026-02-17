@@ -20,6 +20,7 @@ async function fetchPosts() {
   if (!SHEET_ID || SHEET_ID === 'YOUR_SHEET_ID_HERE') {
     posts = getSamplePosts();
     init();
+    hideLoader();
     return Promise.resolve();
   }
 
@@ -53,6 +54,7 @@ async function fetchPosts() {
     console.error('Error fetching posts:', error);
     posts = getSamplePosts();
     init();
+    hideLoader();
     return Promise.resolve();
   }
 }
@@ -491,6 +493,18 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 });
+// ============================================
+// PAGE LOADER
+// ============================================
+function hideLoader() {
+  const loader = document.getElementById('pageLoader');
+  if (loader) {
+    loader.classList.add('hidden');
+    setTimeout(() => {
+      loader.style.display = 'none';
+    }, 600);
+  }
+}
 // ============================================
 // SUBSCRIBE POPUP
 // ============================================
