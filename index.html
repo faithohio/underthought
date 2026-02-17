@@ -1094,6 +1094,115 @@
     grid-template-columns: 1fr;
   }
 }
+  /* SUBSCRIBE POPUP */
+.subscribe-popup {
+  display: none;
+  position: fixed;
+  bottom: 40px;
+  right: 40px;
+  width: 380px;
+  background: var(--surface);
+  border: 1px solid var(--gold-border);
+  padding: 40px;
+  z-index: 3000;
+  animation: slideUp 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 20px 60px rgba(0,0,0,0.6);
+}
+
+.subscribe-popup.active {
+  display: block;
+}
+
+@keyframes slideUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.subscribe-popup-close {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  background: none;
+  border: none;
+  color: var(--muted);
+  font-size: 20px;
+  cursor: pointer;
+  transition: color 0.3s ease;
+  width: 28px;
+  height: 28px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.subscribe-popup-close:hover {
+  color: var(--gold);
+}
+
+.subscribe-popup-label {
+  font-size: 9px;
+  letter-spacing: 3.5px;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 12px;
+  font-weight: 400;
+}
+
+.subscribe-popup-title {
+  font-family: 'Anton', sans-serif;
+  font-size: 28px;
+  font-weight: 400;
+  font-style: italic;
+  color: var(--white);
+  margin-bottom: 12px;
+  letter-spacing: 0.5px;
+  line-height: 1.2;
+}
+
+.subscribe-popup-text {
+  font-size: 13px;
+  color: var(--muted);
+  line-height: 1.7;
+  margin-bottom: 24px;
+}
+
+.subscribe-popup iframe {
+  width: 100%;
+  height: 160px;
+  border: none;
+}
+
+.subscribe-popup-dismiss {
+  display: block;
+  text-align: center;
+  margin-top: 12px;
+  font-size: 10px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--muted);
+  cursor: pointer;
+  transition: color 0.3s ease;
+  background: none;
+  border: none;
+  width: 100%;
+  font-family: 'Anybody', sans-serif;
+}
+
+.subscribe-popup-dismiss:hover {
+  color: var(--gold);
+}
+
+@media (max-width: 600px) {
+  .subscribe-popup {
+    bottom: 0;
+    right: 0;
+    left: 0;
+    width: 100%;
+    border-left: none;
+    border-right: none;
+    border-bottom: none;
+  }
+}
   /* CONFIG NOTICE */
   .config-notice {
     background: var(--gold-dim);
@@ -1301,6 +1410,15 @@
   </div>
 </footer>
 
+  <!-- Subscribe Popup -->
+<div class="subscribe-popup" id="subscribePopup">
+  <button class="subscribe-popup-close" onclick="dismissPopup()">×</button>
+  <div class="subscribe-popup-label">Don't miss an essay</div>
+  <div class="subscribe-popup-title">Join the Cognitive Rebellion</div>
+  <div class="subscribe-popup-text">Essays on culture, identity, and the future — delivered to your inbox.</div>
+  <iframe src="https://byfaithohio.substack.com/embed" scrolling="no"></iframe>
+  <button class="subscribe-popup-dismiss" onclick="dismissPopup()">No thanks, maybe later</button>
+</div>
 <!-- Subscribe Modal -->
 <div class="modal" id="subscribeModal">
   <div class="modal-content">
