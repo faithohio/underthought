@@ -740,3 +740,4 @@ window.addEventListener('popstate', (e) => {
 // START
 // ============================================
 fetchPosts().then(() => readURL());
+setTimeout(() => hideLoader(), 5000);
