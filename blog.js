@@ -360,14 +360,17 @@ function showSeriesOnly() {
   currentView = 'seriesOnly';
   
   document.getElementById('standaloneSection').style.display = 'none';
+  document.getElementById('seriesSection').style.display = 'block';
+  document.getElementById('featuredSection').style.display = 'none';
   
   document.querySelectorAll('.nav-link').forEach(el => el.classList.remove('active'));
   document.getElementById('navSeries').classList.add('active');
   
-document.getElementById('postsList').classList.add('hidden');
-document.getElementById('articleView').classList.remove('active');
-document.getElementById('seriesView').classList.add('active');
-document.getElementById('featuredSection').style.display = 'none';
+  document.getElementById('postsList').classList.remove('hidden');
+  document.getElementById('articleView').classList.remove('active');
+  document.getElementById('seriesView').classList.remove('active');
+  
+  renderSeries();
   
   window.scrollTo({ top: 0, behavior: 'smooth' });
 }
