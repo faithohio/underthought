@@ -20,7 +20,7 @@ async function fetchPosts() {
   if (!SHEET_ID || SHEET_ID === 'YOUR_SHEET_ID_HERE') {
     posts = getSamplePosts();
     init();
-    return;
+    return Promise.resolve();
   }
 
   try {
@@ -53,6 +53,7 @@ async function fetchPosts() {
     console.error('Error fetching posts:', error);
     posts = getSamplePosts();
     init();
+    return Promise.resolve();
   }
 }
 
@@ -370,6 +371,7 @@ function showSeries(seriesName) {
   if (!seriesData) return;
   
   currentView = 'series';
+updateURL('series', seriesName);
   
   document.getElementById('seriesViewTitle').textContent = seriesData.name;
   document.getElementById('seriesViewDescription').textContent = seriesData.description;
@@ -410,6 +412,8 @@ function showArticle(postId) {
   if (!post) return;
   
   currentView = 'article';
+updateURL('essay', postId);
+  
   
   const seriesBadge = document.getElementById('articleSeriesBadge');
   if (post.series) {
@@ -438,6 +442,7 @@ function showArticle(postId) {
 // ============================================
 function backToMain() {
   currentView = 'main';
+updateURL('home');
   
   document.getElementById('standaloneSection').style.display = 'block';
   
@@ -481,8 +486,50 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 });
+// ============================================
+// URL MANAGEMENT
+// ============================================
+function updateURL(type, value) {
+  if (type === 'essay') {
+    history.pushState({ type: 'essay', id: value }, '', `/essay/${value}`);
+  } else if (type === 'series') {
+    const slug = value.toLowerCase().replace(/\s+/g, '-');
+    history.pushState({ type: 'series', name: value }, '', `/series/${slug}`);
+  } else {
+    history.pushState({ type: 'home' }, '', '/');
+  }
+}
+
+function readURL() {
+  const params = new URLSearchParams(window.location.search);
+  const redirect = params.get('redirect');
+  const path = redirect || window.location.pathname;
+
+  if (path.startsWith('/essay/')) {
+    const id = parseInt(path.replace('/essay/', ''));
+    if (!isNaN(id)) showArticle(id);
+  } else if (path.startsWith('/series/')) {
+    const slug = path.replace('/series/', '');
+    const matchedSeries = series.find(s =>
+      s.name.toLowerCase().replace(/\s+/g, '-') === slug
+    );
+    if (matchedSeries) showSeries(matchedSeries.name);
+  }
+}
+
+window.addEventListener('popstate', (e) => {
+  if (!e.state) {
+    backToMain();
+  } else if (e.state.type === 'essay') {
+    showArticle(parseInt(e.state.id));
+  } else if (e.state.type === 'series') {
+    showSeries(e.state.name);
+  } else {
+    backToMain();
+  }
+});
 
 // ============================================
 // START
 // ============================================
-fetchPosts();
+fetchPosts().then(() => readURL());
