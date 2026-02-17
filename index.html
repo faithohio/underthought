@@ -67,34 +67,12 @@
     margin: 0 auto;
     padding: 24px 48px;
     display: flex;
-    justify-content: space-between;
+   justify-content: flex-end;
     gap: 40px;
     align-items: center;
   }
 
-  .nav-logo {
-  font-family: 'Anton', sans-serif;
-  font-size: 24px;
-  font-weight: 400;
-  font-style: italic;
-  letter-spacing: 0.5px;
-  cursor: pointer;
-}
-
-.nav-logo-under {
-  color: var(--gold);
-}
-
-.nav-logo-thought {
-  color: var(--white);
-}
-
-.nav-links {
-  display: flex;
-  gap: 40px;
-  align-items: center;
-}
-  .nav-link {
+   .nav-link {
     font-size: 11px;
     letter-spacing: 2.5px;
     text-transform: uppercase;
@@ -1372,17 +1350,12 @@
 <!-- Navbar -->
 <nav class="navbar">
   <div class="navbar-content">
-    <div class="nav-logo" onclick="backToMain()">
-      <span class="nav-logo-under">under</span><span class="nav-logo-thought">Thought</span>
-    </div>
-    <div class="nav-links">
-      <a class="nav-link" id="navSeries" onclick="showSeriesOnly()">Series</a>
-      <a class="nav-link" href="about.html">About</a>
-      <a class="nav-link" onclick="openSubscribeModal()">Subscribe</a>
-    </div>
+    <a class="nav-link" onclick="backToMain()">Home</a>
+    <a class="nav-link" id="navSeries" onclick="showSeriesOnly()">Series</a>
+    <a class="nav-link" href="about.html">About</a>
+    <a class="nav-link" onclick="openSubscribeModal()">Subscribe</a>
   </div>
 </nav>
-
 <div class="container">
   
  <!-- Config Notice (hidden since Sheet ID is set) -->
