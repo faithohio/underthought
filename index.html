@@ -1278,6 +1278,304 @@
   color: var(--muted);
   font-weight: 400;
 }
+  /* FEATURED ESSAY */
+.featured-section {
+  margin-bottom: 80px;
+}
+
+.featured-card {
+  position: relative;
+  background: var(--surface);
+  border: 1px solid var(--gold-border);
+  cursor: pointer;
+  overflow: hidden;
+  transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.featured-card::before,
+.featured-card::after {
+  content: '';
+  position: absolute;
+  width: 60px;
+  height: 60px;
+  z-index: 2;
+  transition: all 0.5s ease;
+}
+
+.featured-card::before {
+  top: -1px;
+  left: -1px;
+  border-top: 2px solid var(--gold);
+  border-left: 2px solid var(--gold);
+}
+
+.featured-card::after {
+  bottom: -1px;
+  right: -1px;
+  border-bottom: 2px solid var(--gold);
+  border-right: 2px solid var(--gold);
+}
+
+.featured-card:hover::before,
+.featured-card:hover::after {
+  width: 100px;
+  height: 100px;
+}
+
+.featured-card:hover {
+  border-color: rgba(201,169,110,0.8);
+  background: var(--surface2);
+  transform: translateY(-4px);
+  box-shadow: 0 20px 60px rgba(201,169,110,0.08);
+}
+
+.featured-shimmer {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, var(--gold), transparent);
+  background-size: 200% 100%;
+  animation: shimmerLine 3s ease-in-out infinite;
+  z-index: 2;
+}
+
+@keyframes shimmerLine {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+
+.featured-inner {
+  display: grid;
+  grid-template-columns: 1fr 480px;
+  min-height: 480px;
+}
+
+.featured-content {
+  padding: 64px 60px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  position: relative;
+  z-index: 1;
+}
+
+.featured-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 32px;
+}
+
+.featured-badge-dot {
+  width: 6px;
+  height: 6px;
+  background: var(--gold);
+  border-radius: 50%;
+  animation: badgePulse 2s ease-in-out infinite;
+}
+
+@keyframes badgePulse {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.5; transform: scale(0.8); }
+}
+
+.featured-badge-text {
+  font-size: 9px;
+  letter-spacing: 3.5px;
+  text-transform: uppercase;
+  color: var(--gold);
+  font-weight: 400;
+}
+
+.featured-series-badge {
+  display: inline-block;
+  font-size: 9px;
+  letter-spacing: 2.5px;
+  text-transform: uppercase;
+  color: var(--gold);
+  background: var(--gold-dim);
+  border: 1px solid var(--gold-border);
+  padding: 6px 14px;
+  margin-bottom: 28px;
+}
+
+.featured-meta {
+  font-size: 10px;
+  letter-spacing: 2.5px;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: 24px;
+  font-weight: 400;
+}
+
+.featured-title {
+  font-family: 'Anton', sans-serif;
+  font-size: 56px;
+  font-weight: 400;
+  font-style: italic;
+  line-height: 1.1;
+  color: var(--white);
+  margin-bottom: 28px;
+  letter-spacing: 0.5px;
+  transition: color 0.3s ease;
+  max-width: 560px;
+}
+
+.featured-card:hover .featured-title {
+  color: var(--gold);
+}
+
+.featured-excerpt {
+  font-size: 16px;
+  line-height: 1.9;
+  color: var(--muted);
+  max-width: 520px;
+  margin-bottom: 40px;
+}
+
+.featured-bottom {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.featured-tags {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.featured-read {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 11px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--gold);
+  font-weight: 400;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  white-space: nowrap;
+}
+
+.featured-card:hover .featured-read {
+  opacity: 1;
+}
+
+.featured-read::after {
+  content: '→';
+  font-size: 16px;
+  transition: transform 0.3s ease;
+}
+
+.featured-card:hover .featured-read::after {
+  transform: translateX(4px);
+}
+
+.featured-image-wrap {
+  position: relative;
+  overflow: hidden;
+}
+
+.featured-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.6s ease;
+  display: block;
+}
+
+.featured-card:hover .featured-image {
+  transform: scale(1.05);
+}
+
+.featured-image-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(to right, rgba(20,20,20,0.4) 0%, transparent 100%);
+}
+
+.featured-image-placeholder {
+  width: 100%;
+  height: 100%;
+  background: var(--surface2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  overflow: hidden;
+}
+
+.featured-image-placeholder::before {
+  content: '';
+  position: absolute;
+  width: 300px;
+  height: 300px;
+  border: 1px solid var(--gold-border);
+  border-radius: 50%;
+  animation: rotateSlow 20s linear infinite;
+}
+
+.featured-image-placeholder::after {
+  content: '';
+  position: absolute;
+  width: 200px;
+  height: 200px;
+  border: 1px solid var(--border);
+  border-radius: 50%;
+  animation: rotateSlow 15s linear infinite reverse;
+}
+
+@keyframes rotateSlow {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+.featured-placeholder-text {
+  font-family: 'Anton', sans-serif;
+  font-size: 80px;
+  font-style: italic;
+  color: var(--gold-dim);
+  position: relative;
+  z-index: 1;
+  letter-spacing: 1px;
+}
+
+@media (max-width: 900px) {
+  .featured-inner {
+    grid-template-columns: 1fr;
+  }
+
+  .featured-image-wrap,
+  .featured-image-placeholder {
+    height: 300px;
+    order: -1;
+  }
+
+  .featured-title {
+    font-size: 40px;
+  }
+
+  .featured-content {
+    padding: 40px 36px;
+  }
+}
+
+@media (max-width: 600px) {
+  .featured-title {
+    font-size: 32px;
+  }
+
+  .featured-content {
+    padding: 32px 24px;
+  }
+}
   /* CONFIG NOTICE */
   .config-notice {
     background: var(--gold-dim);
@@ -1391,6 +1689,35 @@
     <div class="posts-grid" id="seriesPostsGrid"></div>
   </div>
 
+  <!-- Featured Essay -->
+<div class="featured-section" id="featuredSection" style="display:none;">
+  <div class="section-header">
+    <div class="section-label">Featured</div>
+    <div class="section-title">Author's Pick</div>
+  </div>
+  <div class="featured-card" id="featuredCard">
+    <div class="featured-shimmer"></div>
+    <div class="featured-inner">
+      <div class="featured-content">
+        <div>
+          <div class="featured-badge">
+            <div class="featured-badge-dot"></div>
+            <div class="featured-badge-text">Author's Pick</div>
+          </div>
+          <div class="featured-series-badge" id="featuredSeriesBadge" style="display:none;"></div>
+          <div class="featured-meta" id="featuredMeta"></div>
+          <div class="featured-title" id="featuredTitle"></div>
+          <div class="featured-excerpt" id="featuredExcerpt"></div>
+        </div>
+        <div class="featured-bottom">
+          <div class="featured-tags" id="featuredTags"></div>
+          <div class="featured-read">Read Essay</div>
+        </div>
+      </div>
+      <div class="featured-image-wrap" id="featuredImageWrap"></div>
+    </div>
+  </div>
+</div>
   <!-- Main Posts List -->
   <div class="posts-list main-content" id="postsList">
     
