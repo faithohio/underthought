@@ -46,7 +46,7 @@ async function fetchPosts() {
         series: cells[6]?.v || null,
         seriesDescription: cells[7]?.v || null,
         imageUrl: cells[8]?.v || null,
-        featured: cells[10]?.v?.toString().toUpperCase() === 'YES'
+        featured: cells[9]?.v?.toString().toUpperCase() === 'YES'
       };
     }).filter(post => post.title);
     
