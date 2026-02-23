@@ -354,7 +354,51 @@
   display: block;
   transition: transform 0.5s ease;
 }
+.post-image-fallback {
+  width: 100%;
+  height: 240px;
+  background: var(--surface2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  overflow: hidden;
+}
 
+.post-image-fallback::before {
+  content: '';
+  position: absolute;
+  width: 150px;
+  height: 150px;
+  border: 1px solid var(--gold-border);
+  border-radius: 50%;
+  animation: rotateSlow 20s linear infinite;
+}
+
+.post-image-fallback::after {
+  content: '';
+  position: absolute;
+  width: 100px;
+  height: 100px;
+  border: 1px solid var(--border);
+  border-radius: 50%;
+  animation: rotateSlow 15s linear infinite reverse;
+}
+
+@keyframes rotateSlow {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+.post-fallback-text {
+  font-family: 'Anton', sans-serif;
+  font-size: 48px;
+  font-style: italic;
+  color: var(--gold-dim);
+  position: relative;
+  z-index: 1;
+  letter-spacing: 1px;
+}
 .post-card:hover .post-image {
   transform: scale(1.05);
 }
