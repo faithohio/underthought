@@ -322,11 +322,12 @@ function renderPosts(showAll = false) {
       ${filtered.map(post => `
         <div class="post-card" onclick="showArticle(${post.id})">
           ${post.imageUrl ? `
-            <div class="post-image-container">
-              <img class="post-image" src="${post.imageUrl}" alt="${post.title}">
-              <div class="post-image-overlay"></div>
-            </div>
-          ` : ''}
+  <div class="post-image-container">
+    <img class="post-image" src="${post.imageUrl}" alt="${post.title}"
+      onerror="this.parentElement.innerHTML='<div class=\\'post-image-fallback\\'><div class=\\'post-fallback-text\\'>uT</div></div>'">
+    <div class="post-image-overlay"></div>
+  </div>
+` : ''}
           <div class="post-content">
             <div class="post-meta">${post.date} · ${post.readTime}</div>
             <h2 class="post-title">${post.title}</h2>
@@ -392,11 +393,12 @@ updateURL('series', seriesName);
   grid.innerHTML = seriesData.posts.map(post => `
     <div class="post-card" onclick="showArticle(${post.id})">
       ${post.imageUrl ? `
-        <div class="post-image-container">
-          <img class="post-image" src="${post.imageUrl}" alt="${post.title}">
-          <div class="post-image-overlay"></div>
-        </div>
-      ` : ''}
+  <div class="post-image-container">
+    <img class="post-image" src="${post.imageUrl}" alt="${post.title}"
+      onerror="this.parentElement.innerHTML='<div class=\\'post-image-fallback\\'><div class=\\'post-fallback-text\\'>uT</div></div>'">
+    <div class="post-image-overlay"></div>
+  </div>
+` : ''}
       <div class="post-content">
         <div class="post-meta">${post.date} · ${post.readTime}</div>
         <h2 class="post-title">${post.title}</h2>
@@ -682,11 +684,12 @@ function renderRelatedPosts(post) {
         ${related.map(p => `
           <div class="post-card" onclick="showArticle(${p.id})">
             ${p.imageUrl ? `
-              <div class="post-image-container">
-                <img class="post-image" src="${p.imageUrl}" alt="${p.title}">
-                <div class="post-image-overlay"></div>
-              </div>
-            ` : ''}
+  <div class="post-image-container">
+    <img class="post-image" src="${p.imageUrl}" alt="${p.title}"
+      onerror="this.parentElement.innerHTML='<div class=\\'post-image-fallback\\'><div class=\\'post-fallback-text\\'>uT</div></div>'">
+    <div class="post-image-overlay"></div>
+  </div>
+` : ''}
             <div class="post-content">
               <div class="post-meta">${p.date} · ${p.readTime}</div>
               <h2 class="post-title">${p.title}</h2>
@@ -743,18 +746,18 @@ function renderFeatured() {
   // Image
   const imageWrap = document.getElementById('featuredImageWrap');
   if (featured.imageUrl) {
-    imageWrap.innerHTML = `
-      <img class="featured-image" src="${featured.imageUrl}" alt="${featured.title}">
-      <div class="featured-image-overlay"></div>
-    `;
-  } else {
-    imageWrap.innerHTML = `
-      <div class="featured-image-placeholder">
-        <div class="featured-placeholder-text">uT</div>
-      </div>
-    `;
-  }
-
+  imageWrap.innerHTML = `
+    <img class="featured-image" src="${featured.imageUrl}" alt="${featured.title}"
+      onerror="this.parentElement.innerHTML='<div class=\\'featured-image-placeholder\\'><div class=\\'featured-placeholder-text\\'>uT</div></div>'">
+    <div class="featured-image-overlay"></div>
+  `;
+} else {
+  imageWrap.innerHTML = `
+    <div class="featured-image-placeholder">
+      <div class="featured-placeholder-text">uT</div>
+    </div>
+  `;
+}
   // Click to open
   document.getElementById('featuredCard').onclick = () => showArticle(featured.id);
 }
